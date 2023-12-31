@@ -16,13 +16,14 @@ public:
             }
         
       
-        
-        cursum += candidate[l];
-        temp.push_back(candidate[l]);
-        helper(candidate, n, k, l, cursum, temp);
-        cursum -= candidate[l];
-        temp.pop_back();
-        helper(candidate, n, k, l+1, cursum, temp);
+        for(int i=l;i<candidate.size();i++){
+            cursum += candidate[i];
+            temp.push_back(candidate[i]);
+            helper(candidate, n, k, i+1, cursum, temp);
+            cursum -= candidate[i];
+            temp.pop_back();
+        }
+      
     }
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<int> temp;
@@ -37,11 +38,15 @@ int main() {
     int k = 3;
     int n = 7;
     vector<vector<int>> result = sol.combinationSum3(k, n);
-    for (auto &vec : result) {
-        for (int num : vec) {
-            cout << num << " ";
+    if (result.empty()) {
+        cout << "No combinations found." << endl;
+    } else {
+        for (auto &vec : result) {
+            for (int num : vec) {
+                cout << num << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
     return 0;
 }
